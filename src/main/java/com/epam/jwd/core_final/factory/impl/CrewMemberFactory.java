@@ -8,6 +8,7 @@ public class CrewMemberFactory implements EntityFactory<CrewMember> {
 
     @Override
     public CrewMember create(Object... args) {
-        return null;
+        Object[] crewArgs = args;
+        return new CrewMember((Long) args[0], (String) args[1]);
     }
 }

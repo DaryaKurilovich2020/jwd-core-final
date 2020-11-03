@@ -8,15 +8,23 @@ package com.epam.jwd.core_final.domain;
  */
 public abstract class AbstractBaseEntity implements BaseEntity {
 
+    private final Long id;
+    private final String name;
+
+    protected AbstractBaseEntity(Long id, String name) {
+        this.name = name;
+        this.id = id;
+    }
+
     @Override
     public Long getId() {
-        // todo
-        return null;
+        //todo
+        return this.id;
     }
 
     @Override
     public String getName() {
         // todo
-        return null;
+        return this.name;
     }
 }
