@@ -8,7 +8,7 @@ import java.util.Map;
  * isReadyForNextMissions {@link Boolean} - true by default. Set to false, after first failed mission
  */
 public class Spaceship extends AbstractBaseEntity {
-    //todo
+
     private long flightDistance;
     private Map<Role, Short> crew;
     private boolean isReadyForNextMissions = true;

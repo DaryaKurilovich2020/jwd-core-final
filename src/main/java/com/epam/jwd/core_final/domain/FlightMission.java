@@ -16,20 +16,44 @@ import java.util.List;
  */
 public class FlightMission extends AbstractBaseEntity {
 
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private long distance;
-    private MissionResult missionResult;
-    private Spaceship assignedSpaceShift;
-    private List<CrewMember> assignedCrew;
+    private final LocalDate startDate;
+    private final LocalDate endDate;
+    private final long distance;
+    private final MissionResult missionResult;
+    private final Spaceship assignedSpaceShip;
+    private final List<CrewMember> assignedCrew;
 
-    public FlightMission(Long id, String name, LocalDate startDate, LocalDate endDate, long distance, MissionResult missionResult, Spaceship assignedSpaceShift, List<CrewMember> assignedCrew) {
+    public FlightMission(Long id, String name, LocalDate startDate, LocalDate endDate, long distance, MissionResult missionResult, Spaceship assignedSpaceShip, List<CrewMember> assignedCrew) {
         super(id, name);
         this.startDate = startDate;
         this.endDate = endDate;
         this.distance = distance;
         this.missionResult = missionResult;
-        this.assignedSpaceShift = assignedSpaceShift;
+        this.assignedSpaceShip = assignedSpaceShip;
         this.assignedCrew = assignedCrew;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public long getDistance() {
+        return distance;
+    }
+
+    public MissionResult getMissionResult() {
+        return missionResult;
+    }
+
+    public Spaceship getAssignedSpaceShip() {
+        return assignedSpaceShip;
+    }
+
+    public List<CrewMember> getAssignedCrew() {
+        return assignedCrew;
     }
 }
