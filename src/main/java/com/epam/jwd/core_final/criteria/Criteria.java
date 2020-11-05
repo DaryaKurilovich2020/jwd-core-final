@@ -6,8 +6,8 @@ import com.epam.jwd.core_final.domain.BaseEntity;
  * Should be a builder for {@link BaseEntity} fields
  */
 public abstract class Criteria<T extends BaseEntity> {
-    private final Long id;
-    private final String name;
+    protected final Long id;
+    protected final String name;
 
     public Long getId() {
         return id;
@@ -17,14 +17,14 @@ public abstract class Criteria<T extends BaseEntity> {
         return name;
     }
 
-    private Criteria(Long id, String name) {
+    protected Criteria(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    private static class CriteriaBuilder {
-        private Long id;
-        private String name;
+    public static class CriteriaBuilder {
+        protected Long id;
+        protected String name;
 
         public CriteriaBuilder() {
 

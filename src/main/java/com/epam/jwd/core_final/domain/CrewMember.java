@@ -16,4 +16,8 @@ public class CrewMember extends AbstractBaseEntity {
     public CrewMember(Long id, String name) {
         super(id, name);
     }
+
+    public void setReadyForNextMission(boolean readyForNextMission) {
+        isReadyForNextMission = readyForNextMission;
+    }
 }
