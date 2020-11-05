@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Should be a builder for {@link Spaceship} fields
  */
-public class SpaceShipCriteria extends Criteria<Spaceship> {
+public class SpaceshipCriteria extends Criteria<Spaceship> {
     private final long flightDistance;
     private final Map<Role, Short> crew;
 
@@ -20,13 +20,13 @@ public class SpaceShipCriteria extends Criteria<Spaceship> {
         return crew;
     }
 
-    private SpaceShipCriteria(Long id, String name, long flightDistance, Map<Role, Short> crew) {
+    private SpaceshipCriteria(Long id, String name, long flightDistance, Map<Role, Short> crew) {
         super(id, name);
         this.flightDistance = flightDistance;
         this.crew = crew;
     }
 
-    private static class SpaceShipCriteriaBuilder extends CriteriaBuilder {
+    private class SpaceShipCriteriaBuilder extends CriteriaBuilder {
         private long flightDistance;
         private Map<Role, Short> crew;
 
@@ -44,8 +44,8 @@ public class SpaceShipCriteria extends Criteria<Spaceship> {
         }
 
         @Override
-        public SpaceShipCriteria build() {
-            return new SpaceShipCriteria(id, name, flightDistance, crew);
+        public SpaceshipCriteria build() {
+            return new SpaceshipCriteria(id, name, flightDistance, crew);
         }
     }
 }

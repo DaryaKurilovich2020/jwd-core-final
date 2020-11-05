@@ -53,7 +53,7 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
         return crewMemberList;
     }
 
-    private static class FlightMissionCriteriaBuilder extends CriteriaBuilder{
+    private class FlightMissionCriteriaBuilder extends CriteriaBuilder {
         private LocalDate startDate;
         private LocalDate endDate;
         private long distance;
@@ -90,9 +90,10 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
             this.crewMemberList = crewMemberList;
             return this;
         }
+
         @Override
-        public FlightMissionCriteria build(){
-            return new FlightMissionCriteria(id,name,startDate,endDate,distance,missionResult,spaceship,crewMemberList);
+        public FlightMissionCriteria build() {
+            return new FlightMissionCriteria(id, name, startDate, endDate, distance, missionResult, spaceship, crewMemberList);
         }
     }
 }

@@ -22,7 +22,7 @@ public abstract class Criteria<T extends BaseEntity> {
         this.name = name;
     }
 
-    public static abstract class CriteriaBuilder {
+    public abstract class CriteriaBuilder {
         protected Long id;
         protected String name;
 

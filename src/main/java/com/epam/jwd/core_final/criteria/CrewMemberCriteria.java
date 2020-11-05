@@ -27,7 +27,7 @@ public class CrewMemberCriteria extends Criteria<CrewMember> {
         return rank;
     }
 
-    private static class CrewMemberCriteriaBuilder extends CriteriaBuilder {
+    private class CrewMemberCriteriaBuilder extends CriteriaBuilder {
 
         private Role role;
         private Rank rank;
