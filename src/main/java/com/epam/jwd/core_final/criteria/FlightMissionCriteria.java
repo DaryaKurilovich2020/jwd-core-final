@@ -90,6 +90,7 @@ public class FlightMissionCriteria extends Criteria<FlightMission> {
             this.crewMemberList = crewMemberList;
             return this;
         }
+        @Override
         public FlightMissionCriteria build(){
             return new FlightMissionCriteria(id,name,startDate,endDate,distance,missionResult,spaceship,crewMemberList);
         }

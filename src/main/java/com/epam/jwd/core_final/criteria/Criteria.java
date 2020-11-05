@@ -22,7 +22,7 @@ public abstract class Criteria<T extends BaseEntity> {
         this.name = name;
     }
 
-    public static class CriteriaBuilder {
+    public static abstract class CriteriaBuilder {
         protected Long id;
         protected String name;
 
@@ -40,8 +40,6 @@ public abstract class Criteria<T extends BaseEntity> {
             return this;
         }
 
-        public Criteria build() {
-            return new Criteria(id, name);
-        }
+        public abstract Criteria build();
     }
 }

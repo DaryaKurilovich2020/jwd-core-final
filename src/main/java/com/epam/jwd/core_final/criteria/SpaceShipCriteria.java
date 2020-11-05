@@ -42,8 +42,10 @@ public class SpaceShipCriteria extends Criteria<Spaceship> {
             this.crew = crew;
             return this;
         }
-        public SpaceShipCriteria build(){
-            return new SpaceShipCriteria(id,name,flightDistance,crew);
+
+        @Override
+        public SpaceShipCriteria build() {
+            return new SpaceShipCriteria(id, name, flightDistance, crew);
         }
     }
 }

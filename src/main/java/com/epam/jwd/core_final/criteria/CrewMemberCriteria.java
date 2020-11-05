@@ -45,6 +45,7 @@ public class CrewMemberCriteria extends Criteria<CrewMember> {
             return this;
         }
 
+        @Override
         public CrewMemberCriteria build() {
             return new CrewMemberCriteria(id, name, role, rank);
         }
