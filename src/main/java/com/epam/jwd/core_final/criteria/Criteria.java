@@ -6,40 +6,19 @@ import com.epam.jwd.core_final.domain.BaseEntity;
  * Should be a builder for {@link BaseEntity} fields
  */
 public abstract class Criteria<T extends BaseEntity> {
-    protected final Long id;
-    protected final String name;
 
-    public Long getId() {
-        return id;
-    }
+    protected Long id;
+    protected String name;
 
-    public String getName() {
-        return name;
-    }
-
-    protected Criteria(Long id, String name) {
+    public Criteria<T> id(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public Criteria<T> name(String name) {
         this.name = name;
+        return this;
     }
 
-    public abstract class CriteriaBuilder {
-        protected Long id;
-        protected String name;
-
-        public CriteriaBuilder() {
-
-        }
-
-        public CriteriaBuilder id(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public CriteriaBuilder name(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public abstract Criteria build();
-    }
+    public abstract T build();
 }

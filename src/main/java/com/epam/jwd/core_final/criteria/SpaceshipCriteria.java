@@ -2,6 +2,8 @@ package com.epam.jwd.core_final.criteria;
 
 import com.epam.jwd.core_final.domain.Role;
 import com.epam.jwd.core_final.domain.Spaceship;
+import com.epam.jwd.core_final.factory.EntityFactory;
+import com.epam.jwd.core_final.factory.impl.SpaceShipFactory;
 
 import java.util.Map;
 
@@ -9,43 +11,32 @@ import java.util.Map;
  * Should be a builder for {@link Spaceship} fields
  */
 public class SpaceshipCriteria extends Criteria<Spaceship> {
-    private final long flightDistance;
-    private final Map<Role, Short> crew;
+    private long flightDistance;
+    private Map<Role, Short> crew;
 
-    public long getFlightDistance() {
-        return flightDistance;
+    @Override
+    public SpaceshipCriteria id(Long id) {
+        return (SpaceshipCriteria) super.id(id);
     }
 
-    public Map<Role, Short> getCrew() {
-        return crew;
+    @Override
+    public SpaceshipCriteria name(String name) {
+        return (SpaceshipCriteria) super.name(name);
     }
 
-    private SpaceshipCriteria(Long id, String name, long flightDistance, Map<Role, Short> crew) {
-        super(id, name);
+    public SpaceshipCriteria flightDistance(long flightDistance) {
         this.flightDistance = flightDistance;
-        this.crew = crew;
+        return this;
     }
 
-    private class SpaceShipCriteriaBuilder extends CriteriaBuilder {
-        private long flightDistance;
-        private Map<Role, Short> crew;
+    public SpaceshipCriteria crew(Map<Role, Short> crew) {
+        this.crew = crew;
+        return this;
+    }
 
-        public SpaceShipCriteriaBuilder() {
-        }
-
-        public SpaceShipCriteriaBuilder flightDistance(long flightDistance) {
-            this.flightDistance = flightDistance;
-            return this;
-        }
-
-        public SpaceShipCriteriaBuilder crew(Map<Role, Short> crew) {
-            this.crew = crew;
-            return this;
-        }
-
-        @Override
-        public SpaceshipCriteria build() {
-            return new SpaceshipCriteria(id, name, flightDistance, crew);
-        }
+    @Override
+    public Spaceship build() {
+        EntityFactory<Spaceship> spaceshipFactory = new SpaceShipFactory();
+        return spaceshipFactory.create(this.id, this.name, this.flightDistance, this.crew);
     }
 }

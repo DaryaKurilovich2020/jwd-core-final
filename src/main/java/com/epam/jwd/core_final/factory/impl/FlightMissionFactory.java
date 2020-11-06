@@ -12,7 +12,12 @@ import java.util.List;
 public class FlightMissionFactory implements EntityFactory<FlightMission> {
     @Override
     public FlightMission create(Object... args) {
-        Object[] crewArgs = args;
-        return new FlightMission((Long) args[0], (String) args[1], (LocalDate) args[2], (LocalDate) args[3], (long) args[4], (MissionResult) args[5], (Spaceship) args[6], (List<CrewMember>) args[7]);
+        FlightMission newFlightMission = new FlightMission((Long) args[0], (String) args[1]);
+        newFlightMission.setStartDate((LocalDate) args[2]);
+        newFlightMission.setDistance((long) args[3]);
+        newFlightMission.setMissionResult(MissionResult.PLANNED);
+        newFlightMission.setAssignedCrew((List<CrewMember>) args[4]);
+        newFlightMission.setAssignedSpaceShip((Spaceship) args[5]);
+        return newFlightMission;
     }
 }

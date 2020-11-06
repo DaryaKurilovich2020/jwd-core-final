@@ -9,7 +9,10 @@ import java.util.Map;
 public class SpaceShipFactory implements EntityFactory<Spaceship> {
     @Override
     public Spaceship create(Object... args) {
-        Object[] crewArgs = args;
-        return new Spaceship((Long) args[0], (String) args[1], (long) args[2], (Map<Role, Short>) args[3]);
+        Spaceship newSpaceship = new Spaceship((Long) args[0], (String) args[1]);
+        newSpaceship.setFlightDistance((long) args[2]);
+        newSpaceship.setCrew((Map<Role, Short>) args[3]);
+        newSpaceship.setReadyForNextMissions(true);
+        return newSpaceship;
     }
 }
