@@ -1,16 +1,27 @@
 package com.epam.jwd.core_final.context.impl;
 
 import com.epam.jwd.core_final.context.ApplicationContext;
+import com.epam.jwd.core_final.domain.ApplicationProperties;
 import com.epam.jwd.core_final.domain.BaseEntity;
 import com.epam.jwd.core_final.domain.CrewMember;
 import com.epam.jwd.core_final.domain.Spaceship;
 import com.epam.jwd.core_final.exception.InvalidStateException;
+import com.epam.jwd.core_final.factory.impl.CrewMemberFactory;
+import com.epam.jwd.core_final.factory.impl.SpaceShipFactory;
+import com.epam.jwd.core_final.util.IdCounter;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 // todo
 public class NassaContext implements ApplicationContext {
+
+    private static final String SEPARATOR = FileSystems.getDefault().getSeparator();
 
     // no getters/setters for them
     private Collection<CrewMember> crewMembers = new ArrayList<>();
@@ -23,10 +34,43 @@ public class NassaContext implements ApplicationContext {
 
     /**
      * You have to read input files, populate collections
+     *
      * @throws InvalidStateException
      */
     @Override
     public void init() throws InvalidStateException {
-        throw new InvalidStateException();
+        ApplicationProperties properties = ApplicationProperties.getInstance();
+        String crewFilePath = getInputRootDirPathWithSeparator(properties) + SEPARATOR + properties.getCrewFileName();
+        String spaceshipsFilePath = getInputRootDirPathWithSeparator(properties) + properties.getSpaceshipsFileName();
+
+        try (BufferedReader crewReader = new BufferedReader(new FileReader(crewFilePath));
+             BufferedReader spaceshipReader = new BufferedReader(new FileReader(spaceshipsFilePath))) {
+            hireCrewMembers(crewReader);
+            buildSpaceships(spaceshipReader);
+        } catch (IOException e) {
+            throw new InvalidStateException();
+        }
+    }
+
+    private String getInputRootDirPathWithSeparator(ApplicationProperties applicationProperties) {
+        return applicationProperties.getInputRootDir() + SEPARATOR;
+    }
+
+    private void buildSpaceships(BufferedReader spaceshipReader) throws IOException {
+        String[] spaceshipsAsString = spaceshipReader.readLine().split(";");
+        Arrays.stream(spaceshipsAsString).forEach(s -> {
+            SpaceShipFactory spaceShipFactory = new SpaceShipFactory();
+            Spaceship spaceship = spaceShipFactory.create(IdCounter.getId(), s.split(","));
+            spaceships.add(spaceship);
+        });
+    }
+
+    private void hireCrewMembers(BufferedReader crewReader) throws IOException {
+        String[] crewMembersAsString = crewReader.readLine().split(";");
+        Arrays.stream(crewMembersAsString).forEach(s -> {
+            CrewMemberFactory crewMemberFactory = new CrewMemberFactory();
+            CrewMember crewMember = crewMemberFactory.create(IdCounter.getId(), s.split(","));
+            crewMembers.add(crewMember);
+        });
     }
 }

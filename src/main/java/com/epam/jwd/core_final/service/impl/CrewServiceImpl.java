@@ -2,6 +2,7 @@ package com.epam.jwd.core_final.service.impl;
 
 import com.epam.jwd.core_final.criteria.Criteria;
 import com.epam.jwd.core_final.domain.CrewMember;
+import com.epam.jwd.core_final.domain.FlightMission;
 import com.epam.jwd.core_final.service.CrewService;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class CrewServiceImpl implements CrewService {
     }
 
     @Override
-    public void assignCrewMemberOnMission(CrewMember crewMember) throws RuntimeException {
+    public void assignCrewMemberOnMission(CrewMember crewMember, FlightMission flightMission) throws RuntimeException {
 
     }
 

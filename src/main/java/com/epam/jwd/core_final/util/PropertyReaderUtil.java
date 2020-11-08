@@ -13,6 +13,11 @@ public final class PropertyReaderUtil {
 
     private PropertyReaderUtil() {
     }
+    public static Properties getProperties() {
+        loadProperties();
+        return properties;
+    }
+
 
     /**
      * try-with-resource using FileInputStream
@@ -22,34 +27,13 @@ public final class PropertyReaderUtil {
      * as a result - you should populate {@link ApplicationProperties} with corresponding
      * values from property file
      */
-    public static void loadProperties() {
+    private static void loadProperties() {
         final String propertiesFileName = "resource/application.properties";
-        InputStream inputStream = null;
         try (FileInputStream fileInputStream = new FileInputStream(propertiesFileName)) {
-            inputStream = fileInputStream;
-            properties.load(inputStream);
+            properties.load(fileInputStream);
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
 
-    public static void readProperties() {
-        ApplicationProperties applicationProperties = ApplicationProperties.getInstance();
-        applicationProperties.setInputRootDir(properties.getProperty("inputRootDir"));
-        applicationProperties.setOutputRootDir(properties.getProperty("outputRootDir"));
-        applicationProperties.setCrewFileName(properties.getProperty("crewFileName"));
-        applicationProperties.setMissionsFileName(properties.getProperty("missionsFileName"));
-        applicationProperties.setSpaceshipsFileName(properties.getProperty("spaceshipsFileName"));
-        applicationProperties.setFileRefreshRate(Integer.parseInt(properties.getProperty("fileRefreshRate")));
-        applicationProperties.setSpaceshipsFileName(properties.getProperty("spaceshipsFileName"));
-        applicationProperties.setDateTimeFormat(properties.getProperty("dateTimeFormat"));
-    }
 }
