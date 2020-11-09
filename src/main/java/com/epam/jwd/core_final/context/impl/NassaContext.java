@@ -1,10 +1,7 @@
 package com.epam.jwd.core_final.context.impl;
 
 import com.epam.jwd.core_final.context.ApplicationContext;
-import com.epam.jwd.core_final.domain.ApplicationProperties;
-import com.epam.jwd.core_final.domain.BaseEntity;
-import com.epam.jwd.core_final.domain.CrewMember;
-import com.epam.jwd.core_final.domain.Spaceship;
+import com.epam.jwd.core_final.domain.*;
 import com.epam.jwd.core_final.exception.InvalidStateException;
 import com.epam.jwd.core_final.factory.impl.CrewMemberFactory;
 import com.epam.jwd.core_final.factory.impl.SpaceShipFactory;
@@ -21,11 +18,22 @@ import java.util.Collection;
 // todo
 public class NassaContext implements ApplicationContext {
 
+    private static NassaContext nassaContext;
+    private NassaContext(){
+
+    }
+    public static NassaContext getInstance(){
+        if(nassaContext==null){
+            nassaContext=new NassaContext();
+        }
+        return nassaContext;
+    }
     private static final String SEPARATOR = FileSystems.getDefault().getSeparator();
 
     // no getters/setters for them
     private Collection<CrewMember> crewMembers = new ArrayList<>();
     private Collection<Spaceship> spaceships = new ArrayList<>();
+    private Collection<FlightMission> flightMissions = new ArrayList<>();
 
     @Override
     public <T extends BaseEntity> Collection<T> retrieveBaseEntityList(Class<T> tClass) {
