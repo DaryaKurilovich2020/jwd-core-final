@@ -9,7 +9,7 @@ public interface Application {
     //сделать поле apl menu в и старте запустить метод принт options
     static void start() throws InvalidStateException {
         final Supplier<ApplicationContext> applicationContextSupplier = NassaContext::new;// todo
-        NassaContext nassaContext=NassaContext.getInstance();
+        final NassaContext nassaContext= new NassaContext();
         nassaContext.init();
         afterContextInit(applicationContextSupplier::get);
     }

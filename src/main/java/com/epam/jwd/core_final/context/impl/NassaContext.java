@@ -18,16 +18,7 @@ import java.util.Collection;
 // todo
 public class NassaContext implements ApplicationContext {
 
-    private static NassaContext nassaContext;
-    private NassaContext(){
 
-    }
-    public static NassaContext getInstance(){
-        if(nassaContext==null){
-            nassaContext=new NassaContext();
-        }
-        return nassaContext;
-    }
     private static final String SEPARATOR = FileSystems.getDefault().getSeparator();
 
     // no getters/setters for them

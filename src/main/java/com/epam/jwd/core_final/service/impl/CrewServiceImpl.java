@@ -64,7 +64,6 @@ public class CrewServiceImpl implements CrewService {
     }
 
     public static boolean isDuplicate(String name) {
-        NassaContext nassaContext = NassaContext.getInstance();
         List<CrewMember> crewMembers = nassaContext.retrieveBaseEntityList();
         CrewMemberCriteria crewMemberCriteria = new CrewMemberCriteria();
         crewMemberCriteria.name(name).build();
