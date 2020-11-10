@@ -2,6 +2,7 @@ package com.epam.jwd.core_final.service.impl;
 
 import com.epam.jwd.core_final.context.impl.NassaContext;
 import com.epam.jwd.core_final.criteria.Criteria;
+import com.epam.jwd.core_final.domain.CrewMember;
 import com.epam.jwd.core_final.domain.FlightMission;
 import com.epam.jwd.core_final.domain.MissionResult;
 import com.epam.jwd.core_final.domain.Spaceship;
@@ -172,6 +173,7 @@ public class MissionsServiceImpl implements MissionService {
                     break;
                 case 2:
                     result = MissionResult.FAILED;
+                    failMission(flightMission);
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + randomNum);
@@ -183,5 +185,12 @@ public class MissionsServiceImpl implements MissionService {
             return flightMission.result();
         }
         return MissionResult.PLANNED;
+    }
+
+    private static void failMission(FlightMission flightMission) {
+        List<CrewMember> crewMembers = flightMission.getAssignedCrew();
+        crewMembers.stream()
+                .forEach(crewMember -> crewMember.setReadyForNextMission(false));
+        flightMission.getAssignedSpaceShip().setReadyForNextMissions(false);
     }
 }
