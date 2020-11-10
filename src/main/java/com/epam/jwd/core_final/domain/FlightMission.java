@@ -1,5 +1,7 @@
 package com.epam.jwd.core_final.domain;
 
+import com.epam.jwd.core_final.service.impl.MissionsServiceImpl;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,6 +25,7 @@ public class FlightMission extends AbstractBaseEntity {
     private MissionResult missionResult;
     private Spaceship assignedSpaceShip;
     private List<CrewMember> assignedCrew;
+    private int resultCallCounter;
 
     public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
@@ -65,7 +68,19 @@ public class FlightMission extends AbstractBaseEntity {
     }
 
     public MissionResult getMissionResult() {
-        return missionResult;
+        return MissionsServiceImpl.getMissionResult(this);
+    }
+
+    public MissionResult result() {
+        return this.missionResult;
+    }
+
+    public int getResultCallCounter() {
+        return resultCallCounter;
+    }
+
+    public void setResultCallCounter(int resultCallCounter) {
+        this.resultCallCounter = resultCallCounter;
     }
 
     public Spaceship getAssignedSpaceShip() {

@@ -1,23 +1,23 @@
 package com.epam.jwd.core_final.service.impl;
 
 import com.epam.jwd.core_final.context.impl.NassaContext;
-import com.epam.jwd.core_final.criteria.CrewMemberCriteria;
 import com.epam.jwd.core_final.criteria.Criteria;
 import com.epam.jwd.core_final.domain.CrewMember;
 import com.epam.jwd.core_final.domain.FlightMission;
-import com.epam.jwd.core_final.domain.Rank;
-import com.epam.jwd.core_final.domain.Role;
 import com.epam.jwd.core_final.exception.AssignException;
 import com.epam.jwd.core_final.exception.DuplicateException;
 import com.epam.jwd.core_final.factory.EntityFactory;
 import com.epam.jwd.core_final.factory.impl.CrewMemberFactory;
 import com.epam.jwd.core_final.service.CrewService;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CrewServiceImpl implements CrewService {
     private static CrewServiceImpl crewService;
+    private static NassaContext nassaContext;
 
     private CrewServiceImpl() {
     }
@@ -29,16 +29,24 @@ public class CrewServiceImpl implements CrewService {
         return crewService;
     }
 
+    public static void setNassaContext(NassaContext nassaContext) {
+        CrewServiceImpl.nassaContext = nassaContext;
+    }
+
     @Override
     public List<CrewMember> findAllCrewMembers() {
-        return null;
+        return nassaContext.retrieveBaseEntityList(CrewMember.class)
+                .stream()
+                .collect(Collectors.toList());
     }
-
+//todo
     @Override
     public List<CrewMember> findAllCrewMembersByCriteria(Criteria<? extends CrewMember> criteria) {
-        return null;
+        return nassaContext.retrieveBaseEntityList(CrewMember.class)
+                .stream()
+                .filter(crewMember -> crewMember.equals(criteria.build()))
     }
-
+//todo
     @Override
     public Optional<CrewMember> findCrewMemberByCriteria(Criteria<? extends CrewMember> criteria) {
         return Optional.empty();
@@ -46,12 +54,25 @@ public class CrewServiceImpl implements CrewService {
 
     @Override
     public CrewMember updateCrewMemberDetails(CrewMember crewMember) {
-        return null;
+        Collection<CrewMember> crewMembers = nassaContext.retrieveBaseEntityList(CrewMember.class);
+        Optional<CrewMember> crewMemberToUpdate = crewMembers.stream()
+                .filter(crewMember1 -> crewMember1.getName().equals(crewMember.getName()))
+                .findAny();
+        if (crewMemberToUpdate.isPresent()) {
+            crewMembers.remove(crewMemberToUpdate.get());
+            crewMembers.add(crewMember);
+        }
+        return crewMember;
     }
 
     @Override
     public void assignCrewMemberOnMission(CrewMember crewMember, FlightMission flightMission) throws AssignException {
-        flightMission.getAssignedCrew().add(crewMember);
+        if (crewMember.isReadyForNextMission()) {
+            flightMission.getAssignedCrew().add(crewMember);
+        }
+        else{
+            throw new AssignException("This crewmember is not ready for a mission.");
+        }
     }
 
     @Override
@@ -64,9 +85,7 @@ public class CrewServiceImpl implements CrewService {
     }
 
     public static boolean isDuplicate(String name) {
-        List<CrewMember> crewMembers = nassaContext.retrieveBaseEntityList();
-        CrewMemberCriteria crewMemberCriteria = new CrewMemberCriteria();
-        crewMemberCriteria.name(name).build();
+        Collection<CrewMember> crewMembers = nassaContext.retrieveBaseEntityList(CrewMember.class);
         Optional<CrewMember> duplicatedCrewMember = crewMembers.stream()
                 .filter(crewMember -> crewMember.getName().equals(name))
                 .findAny();
@@ -74,18 +93,6 @@ public class CrewServiceImpl implements CrewService {
             return true;
         } else {
             return false;
-        }
-    }
-
-    public static void checkArguments(Object... args) {
-        boolean invalidArguments = false;
-        if (args.length > 2) {
-            invalidArguments = args[0] instanceof String ? false : true;
-            invalidArguments = args[1] instanceof Role ? false : true;
-            invalidArguments = args[2] instanceof Rank ? false : true;
-        }
-        if (invalidArguments) {
-            throw new IllegalArgumentException("Invalid set of arguments");
         }
     }
 }

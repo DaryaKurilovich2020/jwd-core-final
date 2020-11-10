@@ -8,17 +8,19 @@ import com.epam.jwd.core_final.factory.EntityFactory;
 import com.epam.jwd.core_final.util.IdCounter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class FlightMissionFactory implements EntityFactory<FlightMission> {
     @Override
     public FlightMission create(Object... args) {
         FlightMission newFlightMission = new FlightMission((Long) IdCounter.getId(), (String) args[0]);
-        newFlightMission.setStartDate((LocalDate) args[1]);
-        newFlightMission.setDistance((long) args[2]);
+        newFlightMission.setStartDate((LocalDateTime) args[1]);
+        newFlightMission.setEndDate((LocalDateTime)args[2]);
+        newFlightMission.setDistance((long) args[3]);
         newFlightMission.setMissionResult(MissionResult.PLANNED);
-        newFlightMission.setAssignedCrew((List<CrewMember>) args[3]);
-        newFlightMission.setAssignedSpaceShip((Spaceship) args[3]);
+        newFlightMission.setAssignedCrew((List<CrewMember>) args[4]);
+        newFlightMission.setAssignedSpaceShip((Spaceship) args[5]);
         return newFlightMission;
     }
 }

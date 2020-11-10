@@ -4,7 +4,6 @@ import com.epam.jwd.core_final.domain.ApplicationProperties;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 public final class PropertyReaderUtil {

@@ -1,5 +1,6 @@
 package com.epam.jwd.core_final.service;
 
+import com.epam.jwd.core_final.context.impl.NassaContext;
 import com.epam.jwd.core_final.criteria.Criteria;
 import com.epam.jwd.core_final.domain.FlightMission;
 import com.epam.jwd.core_final.domain.Spaceship;
@@ -15,6 +16,7 @@ import java.util.Optional;
  */
 public interface SpaceshipService {
 
+
     List<Spaceship> findAllSpaceships();
 
     List<Spaceship> findAllSpaceshipsByCriteria(Criteria<? extends Spaceship> criteria);
@@ -28,5 +30,5 @@ public interface SpaceshipService {
 
     // todo create custom exception for case, when spaceship is not able to be created (for example - duplicate.
     // spaceship unique criteria - only name!
-    Spaceship createSpaceship(Spaceship spaceship) throws DuplicateException;
+    Spaceship createSpaceship(Object ... args) throws DuplicateException;
 }
