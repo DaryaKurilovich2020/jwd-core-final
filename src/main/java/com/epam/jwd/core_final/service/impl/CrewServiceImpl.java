@@ -39,17 +39,38 @@ public class CrewServiceImpl implements CrewService {
                 .stream()
                 .collect(Collectors.toList());
     }
-//todo
+
     @Override
     public List<CrewMember> findAllCrewMembersByCriteria(Criteria<? extends CrewMember> criteria) {
         return nassaContext.retrieveBaseEntityList(CrewMember.class)
                 .stream()
-                .filter(crewMember -> crewMember.equals(criteria.build()))
+                .filter(crewMember -> criteriaPredicate(crewMember, criteria))
+                .collect(Collectors.toList());
     }
-//todo
+
+    private static boolean criteriaPredicate(CrewMember crewMember, Criteria<? extends CrewMember> criteria) {
+        boolean predicate = true;
+        if (criteria.build().getName() != null) {
+            predicate = criteria.build().getName().equals(crewMember.getName()) ? true : false;
+        }
+        if (criteria.build().getId() != null) {
+            predicate = criteria.build().getId().equals(crewMember.getId()) ? true : false;
+        }
+        if (criteria.build().getName() != null) {
+            predicate = criteria.build().getRank().equals(crewMember.getRank()) ? true : false;
+        }
+        if (criteria.build().getName() != null) {
+            predicate = criteria.build().getRole().equals(crewMember.getRole()) ? true : false;
+        }
+        return predicate;
+    }
+
     @Override
     public Optional<CrewMember> findCrewMemberByCriteria(Criteria<? extends CrewMember> criteria) {
-        return Optional.empty();
+        return nassaContext.retrieveBaseEntityList(CrewMember.class)
+                .stream()
+                .filter(crewMember -> criteriaPredicate(crewMember, criteria))
+                .findFirst();
     }
 
     @Override
@@ -69,8 +90,7 @@ public class CrewServiceImpl implements CrewService {
     public void assignCrewMemberOnMission(CrewMember crewMember, FlightMission flightMission) throws AssignException {
         if (crewMember.isReadyForNextMission()) {
             flightMission.getAssignedCrew().add(crewMember);
-        }
-        else{
+        } else {
             throw new AssignException("This crewmember is not ready for a mission.");
         }
     }

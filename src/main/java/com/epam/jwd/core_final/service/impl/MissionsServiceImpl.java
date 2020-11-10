@@ -44,24 +44,43 @@ public class MissionsServiceImpl implements MissionService {
                 .collect(Collectors.toList());
     }
 
-    //todo
     @Override
     public List<FlightMission> findAllMissionsByCriteria(Criteria<? extends FlightMission> criteria) {
         return nassaContext.retrieveBaseEntityList(FlightMission.class)
                 .stream()
-                .filter(flightMission -> {
-
-
-                })
+                .filter(flightMission -> criteriaPredicate(flightMission, criteria))
                 .collect(Collectors.toList());
     }
 
-    //todo
+    private static boolean criteriaPredicate(FlightMission flightMission, Criteria<? extends FlightMission> criteria) {
+        boolean predicate = true;
+        if (criteria.build().getName() != null) {
+            predicate = criteria.build().getName().equals(flightMission.getName()) ? true : false;
+        }
+        if (criteria.build().getId() != null) {
+            predicate = criteria.build().getId().equals(flightMission.getId()) ? true : false;
+        }
+        if (criteria.build().getDistance() != 0) {
+            predicate = criteria.build().getDistance() == flightMission.getDistance() ? true : false;
+        }
+        if (criteria.build().getStartDate() != null) {
+            predicate = criteria.build().getStartDate().equals(flightMission.getStartDate()) ? true : false;
+        }
+        if (criteria.build().getEndDate() != null) {
+            predicate = criteria.build().getEndDate().equals(flightMission.getEndDate()) ? true : false;
+        }
+        if (criteria.build().getMissionResult() != null) {
+            predicate = criteria.build().getMissionResult().equals(flightMission.getMissionResult()) ? true : false;
+        }
+        return predicate;
+    }
+
     @Override
     public Optional<FlightMission> findMissionByCriteria(Criteria<? extends FlightMission> criteria) {
         return nassaContext.retrieveBaseEntityList(FlightMission.class)
                 .stream()
-                .filter()
+                .filter(flightMission -> criteriaPredicate(flightMission, criteria))
+                .findFirst();
     }
 
     @Override

@@ -28,6 +28,14 @@ public class NassaContext implements ApplicationContext {
 
     @Override
     public <T extends BaseEntity> Collection<T> retrieveBaseEntityList(Class<T> tClass) {
+        switch (tClass.getSimpleName()) {
+            case "CrewMember":
+                return (Collection<T>) crewMembers;
+            case "Spaceship":
+                return (Collection<T>) spaceships;
+            case "FlightMission":
+                return (Collection<T>) flightMissions;
+        }
         return null;
     }
 

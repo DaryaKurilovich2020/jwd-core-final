@@ -41,22 +41,34 @@ public class SpaceshipServiceImpl implements SpaceshipService {
                 .collect(Collectors.toList());
     }
 
-    //todo
     @Override
     public List<Spaceship> findAllSpaceshipsByCriteria(Criteria<? extends Spaceship> criteria) {
         return nassaContext.retrieveBaseEntityList(Spaceship.class)
                 .stream()
-                .filter(spaceship -> spaceship.equals(criteria.build().getName()))
-
+                .filter(spaceship -> criteriaPredicate(spaceship,criteria))
+                .collect(Collectors.toList());
     }
 
-    //todo
+    private static boolean criteriaPredicate(Spaceship spaceship, Criteria<? extends Spaceship> criteria) {
+        boolean predicate = true;
+        if (criteria.build().getName() != null) {
+            predicate = criteria.build().getName().equals(spaceship.getName()) ? true : false;
+        }
+        if (criteria.build().getId() != null) {
+            predicate = criteria.build().getId().equals(spaceship.getId()) ? true : false;
+        }
+        if (criteria.build().getFlightDistance() != 0) {
+            predicate = criteria.build().getFlightDistance()==(spaceship.getFlightDistance()) ? true : false;
+        }
+        return predicate;
+    }
+
     @Override
     public Optional<Spaceship> findSpaceshipByCriteria(Criteria<? extends Spaceship> criteria) {
         return nassaContext.retrieveBaseEntityList(Spaceship.class)
                 .stream()
-                .filter(spaceship -> spaceship.getName().equals(criteria.build().getName()))
-                .
+                .filter(spaceship -> criteriaPredicate(spaceship,criteria))
+                .findFirst();
     }
 
     @Override
