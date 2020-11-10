@@ -10,6 +10,7 @@ import com.epam.jwd.core_final.factory.EntityFactory;
 import com.epam.jwd.core_final.factory.impl.SpaceShipFactory;
 import com.epam.jwd.core_final.service.SpaceshipService;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -36,9 +37,7 @@ public class SpaceshipServiceImpl implements SpaceshipService {
 
     @Override
     public List<Spaceship> findAllSpaceships() {
-        return nassaContext.retrieveBaseEntityList(Spaceship.class)
-                .stream()
-                .collect(Collectors.toList());
+        return new ArrayList<>(nassaContext.retrieveBaseEntityList(Spaceship.class));
     }
 
     @Override
@@ -52,13 +51,13 @@ public class SpaceshipServiceImpl implements SpaceshipService {
     private static boolean criteriaPredicate(Spaceship spaceship, Criteria<? extends Spaceship> criteria) {
         boolean predicate = true;
         if (criteria.build().getName() != null) {
-            predicate = criteria.build().getName().equals(spaceship.getName()) ? true : false;
+            predicate = criteria.build().getName().equals(spaceship.getName());
         }
         if (criteria.build().getId() != null) {
-            predicate = criteria.build().getId().equals(spaceship.getId()) ? true : false;
+            predicate = criteria.build().getId().equals(spaceship.getId());
         }
         if (criteria.build().getFlightDistance() != 0) {
-            predicate = criteria.build().getFlightDistance()==(spaceship.getFlightDistance()) ? true : false;
+            predicate = criteria.build().getFlightDistance() == (spaceship.getFlightDistance());
         }
         return predicate;
     }
@@ -107,10 +106,6 @@ public class SpaceshipServiceImpl implements SpaceshipService {
         Optional<Spaceship> duplicatedCrewMember = spaceships.stream()
                 .filter(spaceship -> spaceship.getName().equals(name))
                 .findAny();
-        if (duplicatedCrewMember.isPresent()) {
-            return true;
-        } else {
-            return false;
-        }
+        return duplicatedCrewMember.isPresent();
     }
 }

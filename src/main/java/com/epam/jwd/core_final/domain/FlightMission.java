@@ -2,7 +2,6 @@ package com.epam.jwd.core_final.domain;
 
 import com.epam.jwd.core_final.service.impl.MissionsServiceImpl;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 

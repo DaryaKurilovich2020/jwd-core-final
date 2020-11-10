@@ -10,6 +10,7 @@ import com.epam.jwd.core_final.factory.EntityFactory;
 import com.epam.jwd.core_final.factory.impl.CrewMemberFactory;
 import com.epam.jwd.core_final.service.CrewService;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -35,9 +36,7 @@ public class CrewServiceImpl implements CrewService {
 
     @Override
     public List<CrewMember> findAllCrewMembers() {
-        return nassaContext.retrieveBaseEntityList(CrewMember.class)
-                .stream()
-                .collect(Collectors.toList());
+        return new ArrayList<>(nassaContext.retrieveBaseEntityList(CrewMember.class));
     }
 
     @Override
@@ -51,16 +50,16 @@ public class CrewServiceImpl implements CrewService {
     private static boolean criteriaPredicate(CrewMember crewMember, Criteria<? extends CrewMember> criteria) {
         boolean predicate = true;
         if (criteria.build().getName() != null) {
-            predicate = criteria.build().getName().equals(crewMember.getName()) ? true : false;
+            predicate = criteria.build().getName().equals(crewMember.getName());
         }
         if (criteria.build().getId() != null) {
-            predicate = criteria.build().getId().equals(crewMember.getId()) ? true : false;
+            predicate = criteria.build().getId().equals(crewMember.getId());
         }
         if (criteria.build().getName() != null) {
-            predicate = criteria.build().getRank().equals(crewMember.getRank()) ? true : false;
+            predicate = criteria.build().getRank().equals(crewMember.getRank());
         }
         if (criteria.build().getName() != null) {
-            predicate = criteria.build().getRole().equals(crewMember.getRole()) ? true : false;
+            predicate = criteria.build().getRole().equals(crewMember.getRole());
         }
         return predicate;
     }
@@ -109,10 +108,6 @@ public class CrewServiceImpl implements CrewService {
         Optional<CrewMember> duplicatedCrewMember = crewMembers.stream()
                 .filter(crewMember -> crewMember.getName().equals(name))
                 .findAny();
-        if (duplicatedCrewMember.isPresent()) {
-            return true;
-        } else {
-            return false;
-        }
+        return duplicatedCrewMember.isPresent();
     }
 }
