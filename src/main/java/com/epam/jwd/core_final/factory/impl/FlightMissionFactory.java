@@ -1,5 +1,6 @@
 package com.epam.jwd.core_final.factory.impl;
 
+import com.epam.jwd.core_final.context.impl.NassaContext;
 import com.epam.jwd.core_final.domain.CrewMember;
 import com.epam.jwd.core_final.domain.FlightMission;
 import com.epam.jwd.core_final.domain.MissionResult;
@@ -20,6 +21,7 @@ public class FlightMissionFactory implements EntityFactory<FlightMission> {
         newFlightMission.setMissionResult(MissionResult.PLANNED);
         newFlightMission.setAssignedSpaceShip((Spaceship) args[5]);
         newFlightMission.setAssignedCrew((List<CrewMember>) args[4]);
+        NassaContext.getInstance().retrieveBaseEntityList(FlightMission.class).add(newFlightMission);
         return newFlightMission;
     }
 }

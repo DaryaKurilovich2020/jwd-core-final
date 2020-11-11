@@ -66,14 +66,14 @@ public class NassaContext implements ApplicationContext {
 
         try (BufferedReader crewReader = new BufferedReader(new FileReader(crewFilePath))) {
             EntityFileReader crewFileReader = new CrewFileReader();
-            crewFileReader.read(crewReader, this);
+            crewFileReader.read(crewReader);
         } catch (IOException e) {
             LOGGER.error("CrewMember file not found");
             throw new InvalidStateException();
         }
         try (BufferedReader spaceshipReader = new BufferedReader(new FileReader(spaceshipsFilePath))) {
             EntityFileReader spaceshipsFileReader = new SpaceshipFileReader();
-            spaceshipsFileReader.read(spaceshipReader, this);
+            spaceshipsFileReader.read(spaceshipReader);
 
         } catch (IOException e) {
             LOGGER.error("Spaceships file not found");

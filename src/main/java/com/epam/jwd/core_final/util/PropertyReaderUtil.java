@@ -34,7 +34,7 @@ public final class PropertyReaderUtil {
         try (FileInputStream fileInputStream = new FileInputStream(propertiesFileName)) {
             properties.load(fileInputStream);
         } catch (IOException e) {
-            LOGGER.error("Properties file does not exist");
+            LOGGER.error("Properties file does notФ exist");
             e.printStackTrace();
         }
     }
