@@ -19,4 +19,5 @@ public class SpaceshipFileReader implements EntityFileReader {
             NassaContext.getInstance().retrieveBaseEntityList(Spaceship.class).add(spaceship);
         });
     }
+
 }

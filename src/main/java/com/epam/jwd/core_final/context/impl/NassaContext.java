@@ -1,5 +1,6 @@
 package com.epam.jwd.core_final.context.impl;
 
+import com.epam.jwd.core_final.context.Application;
 import com.epam.jwd.core_final.context.ApplicationContext;
 import com.epam.jwd.core_final.context.EntityFileReader;
 import com.epam.jwd.core_final.domain.*;
@@ -79,6 +80,12 @@ public class NassaContext implements ApplicationContext {
             LOGGER.error("Spaceships file not found");
             e.printStackTrace();
         }
+        try {
+            Thread.sleep(ApplicationProperties.getInstance().getFileRefreshRate());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        init();
     }
 
     private String getInputRootDirPathWithSeparator(ApplicationProperties applicationProperties) {
