@@ -11,12 +11,12 @@ import java.util.Arrays;
 
 public class SpaceshipFileReader implements EntityFileReader {
     @Override
-    public void read(BufferedReader spaceshipReader, NassaContext nassaContext) throws IOException {
+    public void read(BufferedReader spaceshipReader) throws IOException {
         String[] spaceshipsAsString = spaceshipReader.readLine().split(";");
         Arrays.stream(spaceshipsAsString).forEach(s -> {
             SpaceShipFactory spaceShipFactory = new SpaceShipFactory();
             Spaceship spaceship = spaceShipFactory.create(IdCounter.getId(), s.split(","));
-            nassaContext.retrieveBaseEntityList(Spaceship.class).add(spaceship);
+            NassaContext.getInstance().retrieveBaseEntityList(Spaceship.class).add(spaceship);
         });
     }
 }

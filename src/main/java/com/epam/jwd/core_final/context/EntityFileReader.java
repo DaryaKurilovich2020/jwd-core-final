@@ -6,6 +6,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 public interface EntityFileReader {
-    void read(BufferedReader bufferedReader, NassaContext nassaContext) throws IOException;
+    void read(BufferedReader bufferedReader) throws IOException;
 
 }

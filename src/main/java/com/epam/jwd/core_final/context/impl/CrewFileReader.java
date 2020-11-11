@@ -11,13 +11,13 @@ import java.util.Arrays;
 
 public class CrewFileReader implements EntityFileReader {
     @Override
-    public void read(BufferedReader crewReader,NassaContext nassaContext) throws IOException {
+    public void read(BufferedReader crewReader) throws IOException {
 
         String[] crewMembersAsString = crewReader.readLine().split(";");
         Arrays.stream(crewMembersAsString).forEach(s -> {
             CrewMemberFactory crewMemberFactory = new CrewMemberFactory();
             CrewMember crewMember = crewMemberFactory.create(IdCounter.getId(), s.split(","));
-            nassaContext.retrieveBaseEntityList(CrewMember.class).add(crewMember);
+            NassaContext.getInstance().retrieveBaseEntityList(CrewMember.class).add(crewMember);
         });
     }
 }

@@ -18,11 +18,6 @@ import java.util.stream.Collectors;
 
 public class SpaceshipServiceImpl implements SpaceshipService {
     private static SpaceshipServiceImpl spaceshipService;
-    private static NassaContext nassaContext;
-
-    public static void setNassaContext(NassaContext nassaContext) {
-        SpaceshipServiceImpl.nassaContext = nassaContext;
-    }
 
     private SpaceshipServiceImpl() {
 
@@ -37,11 +32,11 @@ public class SpaceshipServiceImpl implements SpaceshipService {
 
     @Override
     public List<Spaceship> findAllSpaceships() {
-        return new ArrayList<>(nassaContext.retrieveBaseEntityList(Spaceship.class));
+        return new ArrayList<>(NassaContext.getInstance().retrieveBaseEntityList(Spaceship.class));
     }
 
     public List<Spaceship> findAllAvailableShips() {
-        return nassaContext.retrieveBaseEntityList(Spaceship.class)
+        return NassaContext.getInstance().retrieveBaseEntityList(Spaceship.class)
                 .stream()
                 .filter(spaceship -> spaceship.isReadyForNextMissions())
                 .collect(Collectors.toList());
@@ -49,7 +44,7 @@ public class SpaceshipServiceImpl implements SpaceshipService {
 
     @Override
     public List<Spaceship> findAllSpaceshipsByCriteria(Criteria<? extends Spaceship> criteria) {
-        return nassaContext.retrieveBaseEntityList(Spaceship.class)
+        return NassaContext.getInstance().retrieveBaseEntityList(Spaceship.class)
                 .stream()
                 .filter(spaceship -> criteriaPredicate(spaceship, criteria))
                 .collect(Collectors.toList());
@@ -64,14 +59,14 @@ public class SpaceshipServiceImpl implements SpaceshipService {
             predicate = criteria.build().getId().equals(spaceship.getId());
         }
         if (criteria.build().getFlightDistance() != 0) {
-            predicate = criteria.build().getFlightDistance() == (spaceship.getFlightDistance());
+            predicate = criteria.build().getFlightDistance() >= (spaceship.getFlightDistance());
         }
         return predicate;
     }
 
     @Override
     public Optional<Spaceship> findSpaceshipByCriteria(Criteria<? extends Spaceship> criteria) {
-        return nassaContext.retrieveBaseEntityList(Spaceship.class)
+        return NassaContext.getInstance().retrieveBaseEntityList(Spaceship.class)
                 .stream()
                 .filter(spaceship -> criteriaPredicate(spaceship, criteria))
                 .findFirst();
@@ -79,7 +74,7 @@ public class SpaceshipServiceImpl implements SpaceshipService {
 
     @Override
     public Spaceship updateSpaceshipDetails(Spaceship spaceship) {
-        Collection<Spaceship> spaceships = nassaContext.retrieveBaseEntityList(Spaceship.class);
+        Collection<Spaceship> spaceships = NassaContext.getInstance().retrieveBaseEntityList(Spaceship.class);
         Optional<Spaceship> spaceshipToUpdate = spaceships.stream()
                 .filter(spaceship1 -> spaceship1.getName().equals(spaceship.getName()))
                 .findAny();
@@ -109,7 +104,7 @@ public class SpaceshipServiceImpl implements SpaceshipService {
     }
 
     public static boolean isDuplicate(String name) {
-        Collection<Spaceship> spaceships = nassaContext.retrieveBaseEntityList(Spaceship.class);
+        Collection<Spaceship> spaceships = NassaContext.getInstance().retrieveBaseEntityList(Spaceship.class);
         Optional<Spaceship> duplicatedCrewMember = spaceships.stream()
                 .filter(spaceship -> spaceship.getName().equals(name))
                 .findAny();

@@ -30,10 +30,6 @@ public class CrewServiceImpl implements CrewService {
         return crewService;
     }
 
-    public static void setNassaContext(NassaContext nassaContext) {
-        CrewServiceImpl.nassaContext = nassaContext;
-    }
-
     @Override
     public List<CrewMember> findAllCrewMembers() {
         return new ArrayList<>(nassaContext.retrieveBaseEntityList(CrewMember.class));

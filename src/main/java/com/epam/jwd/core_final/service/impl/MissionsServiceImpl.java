@@ -18,11 +18,6 @@ import java.util.stream.Collectors;
 
 public class MissionsServiceImpl implements MissionService {
     private static MissionsServiceImpl missionsService;
-    private static NassaContext nassaContext;
-
-    public static void setNassaContext(NassaContext nassaContext) {
-        MissionsServiceImpl.nassaContext = nassaContext;
-    }
 
     private MissionsServiceImpl() {
 
@@ -37,12 +32,12 @@ public class MissionsServiceImpl implements MissionService {
 
     @Override
     public List<FlightMission> findAllMissions() {
-        return new ArrayList<>(nassaContext.retrieveBaseEntityList(FlightMission.class));
+        return new ArrayList<>(NassaContext.getInstance().retrieveBaseEntityList(FlightMission.class));
     }
 
     @Override
     public List<FlightMission> findAllMissionsByCriteria(Criteria<? extends FlightMission> criteria) {
-        return nassaContext.retrieveBaseEntityList(FlightMission.class)
+        return NassaContext.getInstance().retrieveBaseEntityList(FlightMission.class)
                 .stream()
                 .filter(flightMission -> criteriaPredicate(flightMission, criteria))
                 .collect(Collectors.toList());
@@ -73,7 +68,7 @@ public class MissionsServiceImpl implements MissionService {
 
     @Override
     public Optional<FlightMission> findMissionByCriteria(Criteria<? extends FlightMission> criteria) {
-        return nassaContext.retrieveBaseEntityList(FlightMission.class)
+        return NassaContext.getInstance().retrieveBaseEntityList(FlightMission.class)
                 .stream()
                 .filter(flightMission -> criteriaPredicate(flightMission, criteria))
                 .findFirst();
@@ -81,7 +76,7 @@ public class MissionsServiceImpl implements MissionService {
 
     @Override
     public FlightMission updateMissionDetails(FlightMission flightMission) {
-        Collection<FlightMission> flightMissions = nassaContext.retrieveBaseEntityList(FlightMission.class);
+        Collection<FlightMission> flightMissions = NassaContext.getInstance().retrieveBaseEntityList(FlightMission.class);
         Optional<FlightMission> flightMissionToUpdate = flightMissions
                 .stream()
                 .filter(flightMission1 -> flightMission1.getName().equals(flightMission.getName()))
@@ -104,7 +99,7 @@ public class MissionsServiceImpl implements MissionService {
     }
 
     public static boolean isDuplicate(String name) {
-        Collection<FlightMission> missions = nassaContext.retrieveBaseEntityList(FlightMission.class);
+        Collection<FlightMission> missions = NassaContext.getInstance().retrieveBaseEntityList(FlightMission.class);
         Optional<FlightMission> duplicatedMission = missions.stream()
                 .filter(mission -> mission.getName().equals(name))
                 .findAny();
