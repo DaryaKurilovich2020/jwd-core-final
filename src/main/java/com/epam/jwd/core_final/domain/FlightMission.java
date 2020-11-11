@@ -4,6 +4,7 @@ import com.epam.jwd.core_final.service.impl.MissionsServiceImpl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.StringJoiner;
 
 /**
  * Expected fields:
@@ -88,5 +89,15 @@ public class FlightMission extends AbstractBaseEntity {
 
     public List<CrewMember> getAssignedCrew() {
         return assignedCrew;
+    }
+
+    @Override
+    public String toString() {
+        StringJoiner stringJoiner=new StringJoiner("\n");
+        stringJoiner.add(super.toString());
+        stringJoiner.add("Start date "+this.getStartDate());
+        stringJoiner.add("End date "+this.getEndDate());
+        stringJoiner.add("Spaceship "+this.getAssignedSpaceShip().getName());
+        return stringJoiner.toString();
     }
 }

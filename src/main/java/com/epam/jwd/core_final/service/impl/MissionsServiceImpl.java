@@ -91,8 +91,8 @@ public class MissionsServiceImpl implements MissionService {
     @Override
     public FlightMission createMission(Object... args) throws DuplicateException {
         checkArgs(args);
-        if (isDuplicate((String) args[0])) {
-            throw new DuplicateException("Mission " + args[0] + "already exists");
+        if (isDuplicate((String) args[1])) {
+            throw new DuplicateException("Mission " + args[1] + "already exists");
         }
         EntityFactory<FlightMission> factory = new FlightMissionFactory();
         return factory.create(args);
@@ -109,22 +109,22 @@ public class MissionsServiceImpl implements MissionService {
     private static void checkArgs(Object... args) {
         boolean invalidArgs = false;
         if (args.length == 6) {
-            if (!(args[0] instanceof String)) {
-                invalidArgs = true;
-            }
-            if (!(args[1] instanceof LocalDateTime)) {
+            if (!(args[1] instanceof String)) {
                 invalidArgs = true;
             }
             if (!(args[2] instanceof LocalDateTime)) {
                 invalidArgs = true;
             }
-            if (!(args[3] instanceof Long)) {
+            if (!(args[3] instanceof LocalDateTime)) {
                 invalidArgs = true;
             }
-            if (!(args[4] instanceof List)) {
+            if (!(args[4] instanceof Long)) {
                 invalidArgs = true;
             }
-            if (!(args[5] instanceof Spaceship)) {
+            if (!(args[5] instanceof List)) {
+                invalidArgs = true;
+            }
+            if (!(args[6] instanceof Spaceship)) {
                 invalidArgs = true;
             }
         } else {

@@ -47,5 +47,6 @@ public interface MissionCreator {
             LOGGER.error("Such a mission already exists");
             ApplicationMenu.printAvailableOptions();
         }
+        LOGGER.info("Mission was created");
     }
 }

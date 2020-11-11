@@ -27,4 +27,10 @@ public abstract class AbstractBaseEntity implements BaseEntity {
         // todo
         return this.name;
     }
+
+    @Override
+    public String toString() {
+        return "Name:"+ this.name+"\n"+
+                "Id:"+this.id;
+    }
 }

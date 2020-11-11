@@ -1,6 +1,7 @@
 package com.epam.jwd.core_final.domain;
 
 import java.util.Map;
+import java.util.StringJoiner;
 
 /**
  * crew {@link java.util.Map<Role, Short>}
@@ -39,5 +40,13 @@ public class Spaceship extends AbstractBaseEntity {
 
     public boolean isReadyForNextMissions() {
         return isReadyForNextMissions;
+    }
+
+    @Override
+    public String toString() {
+        StringJoiner stringJoiner=new StringJoiner("\n");
+        stringJoiner.add(super.toString());
+        stringJoiner.add("Flight distance "+ this.getFlightDistance());
+        return stringJoiner.toString();
     }
 }

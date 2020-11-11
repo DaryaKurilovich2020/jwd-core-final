@@ -1,5 +1,7 @@
 package com.epam.jwd.core_final.domain;
 
+import java.util.StringJoiner;
+
 /**
  * Expected fields:
  * <p>
@@ -39,5 +41,14 @@ public class CrewMember extends AbstractBaseEntity {
 
     public void setRank(Rank rank) {
         this.rank = rank;
+    }
+
+    @Override
+    public String toString() {
+        StringJoiner stringJoiner = new StringJoiner("\n");
+        stringJoiner.add(super.toString());
+        stringJoiner.add("Rank:" + this.getRank());
+        stringJoiner.add("Role" + this.getRole());
+        return stringJoiner.toString();
     }
 }

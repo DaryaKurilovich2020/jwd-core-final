@@ -99,8 +99,8 @@ public class CrewServiceImpl implements CrewService {
 
     @Override
     public CrewMember createCrewMember(Object... args) throws DuplicateException {
-        if (isDuplicate((String) args[0])) {
-            throw new DuplicateException("CrewMember " + args[0] + "already exists");
+        if (isDuplicate((String) args[1])) {
+            throw new DuplicateException("CrewMember " + args[1] + "already exists");
         }
         EntityFactory<CrewMember> factory = new CrewMemberFactory();
         return factory.create(args);

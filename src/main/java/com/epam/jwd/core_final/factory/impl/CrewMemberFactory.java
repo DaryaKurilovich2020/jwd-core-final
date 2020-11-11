@@ -12,9 +12,9 @@ public class CrewMemberFactory implements EntityFactory<CrewMember> {
 
     @Override
     public CrewMember create(Object... args) {
-        CrewMember newCrewMember = new CrewMember((Long) IdCounter.getId(), (String) args[0]);
-        newCrewMember.setRole((Role) args[1]);
-        newCrewMember.setRank((Rank) args[2]);
+        CrewMember newCrewMember = new CrewMember((Long) args[0], (String) args[1]);
+        newCrewMember.setRole((Role) args[2]);
+        newCrewMember.setRank((Rank) args[3]);
         newCrewMember.setReadyForNextMission(true);
         return newCrewMember;
     }

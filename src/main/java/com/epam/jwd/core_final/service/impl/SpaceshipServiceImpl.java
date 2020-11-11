@@ -96,8 +96,8 @@ public class SpaceshipServiceImpl implements SpaceshipService {
 
     @Override
     public Spaceship createSpaceship(Object... args) throws DuplicateException {
-        if (isDuplicate((String) args[0])) {
-            throw new DuplicateException("Spaceship " + args[0] + "already exists");
+        if (isDuplicate((String) args[1])) {
+            throw new DuplicateException("Spaceship " + args[1] + "already exists");
         }
         EntityFactory<Spaceship> factory = new SpaceShipFactory();
         return factory.create(args);

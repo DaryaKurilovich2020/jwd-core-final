@@ -5,9 +5,6 @@ import com.epam.jwd.core_final.exception.InvalidStateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileNotFoundException;
-import java.util.function.Supplier;
-
 public interface Application {
     Logger LOGGER= LoggerFactory.getLogger(Application.class);
     static void start() throws InvalidStateException {

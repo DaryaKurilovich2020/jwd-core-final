@@ -6,7 +6,6 @@ import com.epam.jwd.core_final.service.impl.MissionsServiceImpl;
 import com.epam.jwd.core_final.service.impl.SpaceshipServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.StringJoiner;
@@ -20,9 +19,7 @@ public interface EntitiesFinder {
         stringJoiner.add("1.Find all CrewMembers");
         stringJoiner.add("2.Find CrewMembers by all criterias");
         stringJoiner.add("3.Find all missions");
-        stringJoiner.add("4.Find missions by all criterias");
-        stringJoiner.add("5.Find all spaceships");
-        stringJoiner.add("6.Find spaceships by all criterias");
+        stringJoiner.add("4.Find all spaceships");
         stringJoiner.add("0.Back to menu");
         System.out.println(stringJoiner.toString());
         try {
@@ -46,11 +43,8 @@ public interface EntitiesFinder {
                 MissionsServiceImpl.getInstance().findAllMissions()
                         .forEach(flightMission -> System.out.println(flightMission.toString()));
             case 4:
-            case 5:
                 SpaceshipServiceImpl.getInstance().findAllSpaceships()
                     .forEach(spaceship -> System.out.println(spaceship.toString()));
-
-            case 6:
             case 0:
                 ApplicationMenu.printAvailableOptions();
                 break;
