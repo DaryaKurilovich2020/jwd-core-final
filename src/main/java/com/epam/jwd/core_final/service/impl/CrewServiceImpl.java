@@ -94,6 +94,13 @@ public class CrewServiceImpl implements CrewService {
         }
     }
 
+    public List<CrewMember> findAllAvailableCrewMembers() {
+        return nassaContext.retrieveBaseEntityList(CrewMember.class)
+                .stream()
+                .filter(crewMember -> crewMember.isReadyForNextMission())
+                .collect(Collectors.toList());
+    }
+
     @Override
     public CrewMember createCrewMember(Object... args) throws DuplicateException {
         if (isDuplicate((String) args[0])) {

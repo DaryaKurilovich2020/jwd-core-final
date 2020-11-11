@@ -2,19 +2,17 @@ package com.epam.jwd.core_final.context;
 
 import com.epam.jwd.core_final.context.impl.NassaContext;
 import com.epam.jwd.core_final.exception.InvalidStateException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.FileNotFoundException;
 import java.util.function.Supplier;
 
 public interface Application {
-    //сделать поле apl menu в и старте запустить метод принт options
+    Logger LOGGER= LoggerFactory.getLogger(Application.class);
     static void start() throws InvalidStateException {
-        final Supplier<ApplicationContext> applicationContextSupplier = NassaContext::new;// todo
-        final NassaContext nassaContext= new NassaContext();
-        nassaContext.init();
-        afterContextInit(applicationContextSupplier::get);
-    }
-
-    private static void afterContextInit(ApplicationMenu applicationMenu) {
-        applicationMenu.printAvailableOptions();
+            NassaContext.getInstance().init();
+        LOGGER.info("init successfully completed");
+        ApplicationMenu.printAvailableOptions();
     }
 }

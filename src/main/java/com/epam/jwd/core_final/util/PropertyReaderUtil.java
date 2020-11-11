@@ -1,17 +1,20 @@
 package com.epam.jwd.core_final.util;
 
 import com.epam.jwd.core_final.domain.ApplicationProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
 public final class PropertyReaderUtil {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(PropertyReaderUtil.class);
     private static final Properties properties = new Properties();
 
     private PropertyReaderUtil() {
     }
+
     public static Properties getProperties() {
         loadProperties();
         return properties;
@@ -31,8 +34,8 @@ public final class PropertyReaderUtil {
         try (FileInputStream fileInputStream = new FileInputStream(propertiesFileName)) {
             properties.load(fileInputStream);
         } catch (IOException e) {
+            LOGGER.error("Properties file does not exist");
             e.printStackTrace();
         }
     }
-
 }

@@ -100,8 +100,7 @@ public class MissionsServiceImpl implements MissionService {
             throw new DuplicateException("Mission " + args[0] + "already exists");
         }
         EntityFactory<FlightMission> factory = new FlightMissionFactory();
-        FlightMission flightMission = factory.create(args);
-        return flightMission;
+        return factory.create(args);
     }
 
     public static boolean isDuplicate(String name) {
@@ -156,7 +155,10 @@ public class MissionsServiceImpl implements MissionService {
             int randomNum = ThreadLocalRandom.current().nextInt(0, 3);
             MissionResult result;
             switch (randomNum) {
-                case 0 -> result = MissionResult.CANCELLED;
+                case 0 -> {
+                    result = MissionResult.CANCELLED;
+                    finishMission(flightMission);
+                }
                 case 1 -> result = MissionResult.COMPLETED;
                 case 2 -> {
                     result = MissionResult.FAILED;
@@ -179,5 +181,12 @@ public class MissionsServiceImpl implements MissionService {
             crewMember.setReadyForNextMission(false);
         }
         flightMission.getAssignedSpaceShip().setReadyForNextMissions(false);
+    }
+    private static void finishMission(FlightMission flightMission){
+        List<CrewMember> crewMembers = flightMission.getAssignedCrew();
+        for (CrewMember crewMember : crewMembers) {
+            crewMember.setReadyForNextMission(true);
+        }
+        flightMission.getAssignedSpaceShip().setReadyForNextMissions(true);
     }
 }

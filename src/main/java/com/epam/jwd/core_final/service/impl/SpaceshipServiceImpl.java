@@ -40,11 +40,18 @@ public class SpaceshipServiceImpl implements SpaceshipService {
         return new ArrayList<>(nassaContext.retrieveBaseEntityList(Spaceship.class));
     }
 
+    public List<Spaceship> findAllAvailableShips() {
+        return nassaContext.retrieveBaseEntityList(Spaceship.class)
+                .stream()
+                .filter(spaceship -> spaceship.isReadyForNextMissions())
+                .collect(Collectors.toList());
+    }
+
     @Override
     public List<Spaceship> findAllSpaceshipsByCriteria(Criteria<? extends Spaceship> criteria) {
         return nassaContext.retrieveBaseEntityList(Spaceship.class)
                 .stream()
-                .filter(spaceship -> criteriaPredicate(spaceship,criteria))
+                .filter(spaceship -> criteriaPredicate(spaceship, criteria))
                 .collect(Collectors.toList());
     }
 
@@ -66,7 +73,7 @@ public class SpaceshipServiceImpl implements SpaceshipService {
     public Optional<Spaceship> findSpaceshipByCriteria(Criteria<? extends Spaceship> criteria) {
         return nassaContext.retrieveBaseEntityList(Spaceship.class)
                 .stream()
-                .filter(spaceship -> criteriaPredicate(spaceship,criteria))
+                .filter(spaceship -> criteriaPredicate(spaceship, criteria))
                 .findFirst();
     }
 
